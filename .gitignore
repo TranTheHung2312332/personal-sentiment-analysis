@@ -1,6 +1,10 @@
 test.py
+**/.env
 
-node_labeling_service/node_modules
-node_labeling_service/.env
+**/node_modules/
 
-notebook/test.ipynb
+ml/notebook/test.ipynb
+
+backend/test.py
+
+**/__pycache__/
