@@ -6,6 +6,7 @@ import torch.nn.functional as F
 
 def preprocessing(
         text,
+        religion_norm = True,
         contraction = True,
         emoji_mapping = True,
         emoji_score = True,
@@ -24,22 +25,26 @@ def preprocessing(
 ):
     extra_feats = {}
 
-     # 1. Exclamation intensity
+    # Religion
+    if religion_norm:
+        text = normalize_religion(text)
+
+     # Exclamation intensity
     if ex_intensity:
         text, ex_val = extract_exclamation_intensity(text, cap=ex_intensity_cap)
     else:
         ex_val = 0.0
     extra_feats['ex_intensity'] = ex_val
 
-    # 2. Markdown
+    # Markdown
     if markdown:
         text = extract_markdown(text)
 
-    # 3. Contraction
+    # Contraction
     if contraction:
         text = extend(text)
 
-    # 4. Emoji
+    # Emoji
     if emoji_mapping:
         text, emoji_score_val = extract_emoji(text, beta=emoji_score_scale)
     else:
@@ -50,30 +55,30 @@ def preprocessing(
 
     extra_feats['emoji_score'] = emoji_score_val
 
-    # 5. Mention
+    # Mention
     if mention:
         text = normalize_mention(text)
 
-    # 6. URL
+    # URL
     if url:
         text = normalize_url(text)
 
-    # 7. Time
+    # Time
     if time:
         text = normalize_time(text)
 
-    # 8. Date
+    # Date
     if date:
         text = normalize_date(text)
 
-    # 9. Hashtag
+    # Hashtag
     if hashtag:
         text = normalize_hashtag(text)
 
-    # 10. Whitespace (always)
+    # Whitespace (always)
     text = normalize_whitespace(text)
 
-    # 11. Uppercase features
+    # Uppercase features
     text, is_all_upper = extract_is_all_uppercase(text)
 
     if uppercase_ratio:
@@ -84,11 +89,11 @@ def preprocessing(
     extra_feats['all_uppercase'] = is_all_upper
     extra_feats['uppercase_ratio'] = upper_ratio
 
-    # 12. Lowercase
+    # Lowercase
     if lowercase_norm:
         text = lowercase(text)
 
-    # 13. Punctuation
+    # Punctuation
     if punctuation_norm:
         text = normalize_punctuation(text)
 

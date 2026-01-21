@@ -2,7 +2,20 @@ import re
 import pandas as pd
 import emoji
 import numpy as np
-from .path import EMOJI_PATH, CONTRACTION_PATH
+from .path import EMOJI_PATH, CONTRACTION_PATH, RELIGION_PATH
+
+
+# === Religion preprocessing ===
+with open(RELIGION_PATH, 'r', encoding='utf-8') as f:
+    RELIGION_LIST = [line.strip() for line in f if line.strip()]
+
+RELIGION_PATTERN = re.compile(
+    r'\b(' + '|'.join(map(re.escape, RELIGION_LIST)) + r')\b',
+    flags=re.IGNORECASE
+)
+
+def normalize_religion(text):
+    return re.sub(RELIGION_PATTERN, '[RELIGION]', text)
 
 
 # === Contraction ===

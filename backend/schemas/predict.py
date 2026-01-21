@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 class PreprocessOptions(BaseModel):
+    religion_norm: bool = True
     contraction: bool = True
     emoji_mapping: bool = True
     emoji_score: bool = True

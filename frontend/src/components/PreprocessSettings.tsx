@@ -6,6 +6,7 @@ interface Props {
 }
 
 export const DEFAULT_PREPROCESS: PreprocessOptions = {
+  religion_norm: true,
   contraction: true,
   emoji_mapping: true,
   emoji_score: true,
@@ -25,6 +26,7 @@ export const DEFAULT_PREPROCESS: PreprocessOptions = {
 }
 
 const BOOL_FIELDS: (keyof PreprocessOptions)[] = [
+  'religion_norm',
   'contraction',
   'emoji_mapping',
   'emoji_score',
@@ -97,7 +99,7 @@ export default function PreprocessSettings({ value, onChange }: Props) {
       </label>
 
       <button type="button" onClick={reset}>
-        Reset to backend default
+        Reset to default
       </button>
     </details>
   )

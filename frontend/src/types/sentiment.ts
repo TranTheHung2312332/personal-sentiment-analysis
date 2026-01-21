@@ -1,4 +1,5 @@
 export interface PreprocessOptions {
+    religion_norm?: boolean
     contraction?: boolean
     emoji_mapping?: boolean
     emoji_score?: boolean
